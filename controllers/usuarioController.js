@@ -125,7 +125,19 @@ const confirmar = async (req, res, next) => {
     });
   }
 
-  
+  // confirmamos el usuario modificando la bbdd con el ORM
+  // el ORM trata como objetos a nuestros registros pudiendo acceder a ellos mediante la sintaxis de punto
+  usuario.token = null;
+  usuario.confirmado = true;
+  // hasta este punto la informacion estaria persistiendo en el browser, ahora lo grabamos en la bbdd
+  // save es un metodo del ORM
+  await usuario.save();
+
+  // creamos la vista que se mostrara en el camino feliz
+  return res.render("auth/confirmar-cuenta", {
+    pagina: "Cuenta confirmada",
+    mensaje: "La cuenta ha sido confirmada correctamente",
+  });
 };
 
 export {
