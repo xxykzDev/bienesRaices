@@ -1,10 +1,26 @@
 import express from "express"; // EXMAScript modules syntax
 import usuarioRoutes from "./Routes/usuarioRoutes.js";
 import db from "./config/db.js";
+// con esta libreria nos aseguramos de que el request provegna de una url indicada
+import csurf from "csurf";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
 const PORT = process.env.PORT || 3000;
+
+//habilitar lectura de datos de formulario
+app.use(express.urlencoded({ extended: true }));
+
+// habilitar cookie parser
+app.use(cookieParser());
+
+// habilitar CSRF
+app.use(
+  csurf({
+    cookie: true,
+  })
+);
 
 // conexion a la bbdd
 try {
@@ -15,9 +31,6 @@ try {
 } catch (e) {
   console.log(e);
 }
-
-//habilitar lectura de datos de formulario
-app.use(express.urlencoded({ extended: true }));
 
 // habilitamos pug
 app.set("view engine", "pug");

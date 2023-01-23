@@ -10,10 +10,11 @@ const formularioLogin = (req, res) => {
   });
 };
 
-const formularioRegistro = (Sreq, res) => {
+const formularioRegistro = (req, res) => {
   res.render("auth/registro", {
     // podemos pasarle propsa nuestra vista a traves del metodo render
     pagina: "Crear cuenta",
+    csrfToken: req.csrfToken(),
   });
 };
 
@@ -55,6 +56,7 @@ const registrar = async (req, res) => {
   if (!resultado.isEmpty()) {
     return res.render("auth/registro", {
       pagina: "Crear cuenta",
+      csrfToken: req.csrfToken(),
       //errores
       errores: resultado.array(),
       usuario: {
@@ -73,6 +75,7 @@ const registrar = async (req, res) => {
 
   if (existeUsuario) {
     return res.render("auth/registro", {
+      csrfToken: req.csrfToken(),
       pagina: "Crear cuenta",
       errores: [
         {
