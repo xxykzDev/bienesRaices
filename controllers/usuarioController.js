@@ -109,9 +109,19 @@ const registrar = async (req, res) => {
   });
 };
 
+// funcion que comprueba una cuenta
+// next = parametro para pasar al siguiente middleware EJEMPLO
+const confirmar = (req, res, next) => {
+  const { token } = req.params;
+  // recibimos el parametro pasado por la url
+  console.log(token);
+  next();
+};
+
 export {
   formularioLogin,
   formularioRegistro,
-  formularioOlvidePassword,
   registrar,
+  confirmar,
+  formularioOlvidePassword,
 };

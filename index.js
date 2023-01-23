@@ -4,7 +4,7 @@ import db from "./config/db.js";
 
 const app = express();
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // conexion a la bbdd
 try {
