@@ -13,7 +13,7 @@ const formularioLogin = (req, res) => {
 const formularioRegistro = (Sreq, res) => {
   res.render("auth/registro", {
     // podemos pasarle propsa nuestra vista a traves del metodo render
-    pagina: "crear cuenta",
+    pagina: "Crear cuenta",
   });
 };
 
@@ -111,11 +111,21 @@ const registrar = async (req, res) => {
 
 // funcion que comprueba una cuenta
 // next = parametro para pasar al siguiente middleware EJEMPLO
-const confirmar = (req, res, next) => {
+const confirmar = async (req, res, next) => {
   const { token } = req.params;
-  // recibimos el parametro pasado por la url
-  console.log(token);
-  next();
+
+  // verificar si token es valido
+  const usuario = await Usuario.findOne({ where: { token } });
+
+  if (!usuario) {
+    return res.render("auth/confirmar-cuenta", {
+      pagina: "Error al confirmar tu cuenta",
+      mensaje: "Hubo un error al confirmar tu cuenta",
+      error: true,
+    });
+  }
+
+  
 };
 
 export {
